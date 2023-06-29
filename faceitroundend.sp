@@ -1,8 +1,6 @@
 #include <csgo_colors>
 #include <sdktools>
 
-#define TAG "[FACEIT^] "
-
 public Plugin myinfo = 
 { 
 	name = "FaceIT Round End Stats", 
@@ -37,6 +35,13 @@ public void OnPlayerHurt(Event hEvent, const char[] sEvent, bool bdb)
 
 public void OnRoundEnd(Event hEvent, const char[] sEvent, bool bdb)
 {
+	int k = 0;
+	for(int i = 1; i <= MaxClients; i++)
+		if(IsClientInGame(i) && !IsClientSourceTV(i))
+			k++
+			
+	if(k < 2) return;
+	
 	char buffer[2048], buff[256+sizeof(buffer)], teams[2][128];
 	
 	GetConVarString(FindConVar("mp_teamname_2"), teams[0], sizeof(teams[]));
